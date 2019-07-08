@@ -42,7 +42,7 @@ def hash_table_insert(hash_table, key, value):
     hash_index = hash(key, hash_table.capacity)
     
     if hash_table.storage[hash_index] is not None:
-        print(f"Overwriting index {hash_index} of hash table.")
+        print(f"You're about to Overwrite the value at index {hash_index} of hash table.")
     
     hash_table.storage[hash_index] = key_value_pair
 
@@ -59,7 +59,7 @@ def hash_table_remove(hash_table, key):
     hash_index = hash(key, hash_table.capacity)
 
     if hash_table.storage[hash_index] is None:
-        print(f"{hash_index} value is None")
+        print(f"At index {hash_index} no value exists")
     else:
         hash_table.storage[hash_index] = None
 
