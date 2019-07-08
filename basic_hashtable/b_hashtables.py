@@ -24,6 +24,7 @@ class BasicHashTable:
 # Research and implement the djb2 hash function
 # '''
 def hash(string, max):
+    
     hashed_num = 5381
    
     for character in string:
@@ -38,7 +39,7 @@ def hash(string, max):
 def hash_table_insert(hash_table, key, value):
     key_value_pair = Pair(key, value)
 
-    hash_index = hash(key_value_pair.key, hash_table.capacity)
+    hash_index = hash(key, hash_table.capacity)
     
     if hash_table.storage[hash_index] is not None:
         print(f"Overwriting index {hash_index} of hash table.")
@@ -69,7 +70,9 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
+    
     hash_index = hash(key, hash_table.capacity)
+    
     if hash_table.storage[hash_index] is not None:
         return hash_table.storage[hash_index].value
     else:
@@ -77,12 +80,12 @@ def hash_table_retrieve(hash_table, key):
 
 
 # def insert_test():
-        #creates Hash Table stored under ht
+#         # creates Hash Table stored under ht
 #     ht = BasicHashTable(16)
 
 #     hash_table_insert(ht, "line", "Yoooo")
 #     hash_table_insert(ht, "second", "This is the second value")
-        #Retrieves key "second" and prints the value stored.
+#         # Retrieves key "second" and prints the value stored.
 #     print(hash_table_retrieve(ht, "second"))
 
 # insert_test()
