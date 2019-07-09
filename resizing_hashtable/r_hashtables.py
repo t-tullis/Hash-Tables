@@ -17,14 +17,20 @@ class LinkedPair:
 # '''
 class HashTable:
     def __init__(self, capacity):
-        pass
+        self.capacity = capacity
+        self.storage = [None] * capacity
+
 
 
 # '''
 # Research and implement the djb2 hash function
 # '''
 def hash(string, max):
-    pass
+    hashed_num = 5381
+    
+    for character in string:
+        hashed_num = (( hashed_num << 5) + hashed_num) + ord(character)
+    return hashed_num % max 
 
 
 # '''
@@ -33,7 +39,25 @@ def hash(string, max):
 # Hint: Used the LL to handle collisions
 # '''
 def hash_table_insert(hash_table, key, value):
-    pass
+    hash_index = hash(key, hash_table.capacity)
+
+    if hash_table.storage[hash_index]:
+        #sets current to current hash index
+        current = hash_table.storage[hash_index]
+        #while current.next
+        while current.next:
+            #if key matches current.value = value
+            if current.key == key:
+                current.value = value
+                return 
+            #else move to next
+            else:
+                current.next
+        #set current next to key/value pair     
+        current.next = LinkedPair(key, value)
+        
+    else:
+        hash_table.storage[hash_index] = LinkedPair(key, value)
 
 
 # '''
@@ -42,7 +66,39 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    pass
+
+    hash_index = hash(key, hash_table.capacity)
+
+    if hash_table.storage[hash_index]:
+        found = False
+        previous = None
+        current = hash_table.storage[hash_index]
+
+        while current.next:
+            #while current.next if current.key == key then set found to the current key/value pair and break.
+            if current.key == key:
+                found = current
+                break
+            #else set previous to current and current to current.next to move to next node.
+            else:
+                previous = current
+                current = current.next
+        #if current.key == key then set found to the current key/value pair
+        if current.key == key:
+            found = current
+
+        if found:
+            if previous and previous is not current:
+                previous.next = found.next
+            elif previous:
+                previous.next = None
+            else:
+                hash_table.storage[hashed_index] = None
+            hash_table.count -= 1
+            return None
+        else:
+            print(f"Can't find {hashed_index}. Can't delete")
+            return None
 
 
 # '''
@@ -51,7 +107,22 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    pass
+    
+    hash_index = hash(key, hash_table.capacity)
+    
+    if hash_table.storage[hash_index]:
+        current = hash_table.storage[hash_index]
+        while current.next:
+            if current.key == key:
+                return current.value
+            else:
+                current = current.next
+        if current.key == key:
+            return current.value
+        else:
+            return None
+    else:
+        return None
 
 
 # '''
