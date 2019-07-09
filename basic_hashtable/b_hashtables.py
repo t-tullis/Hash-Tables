@@ -29,7 +29,8 @@ def hash(string, max):
    
     for character in string:
         hashed_num = (( hashed_num << 5) + hashed_num) + ord(character)
-    return hashed_num % (max - 1)
+    return hashed_num % max 
+    
 
 # '''
 # Fill this in.
@@ -121,4 +122,3 @@ def Testing():
 
 
 Testing()
-
