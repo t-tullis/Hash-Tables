@@ -46,14 +46,12 @@ def hash_table_insert(hash_table, key, value):
         current = hash_table.storage[hash_index]
         #while current.next
         while current.next:
-            #if key matches current.value = value
             if current.key == key:
                 current.value = value
                 return 
-            #else move to next
             else:
                 current.next
-        #set current next to key/value pair     
+                
         current.next = LinkedPair(key, value)
         
     else:
@@ -66,39 +64,7 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-
-    hash_index = hash(key, hash_table.capacity)
-
-    if hash_table.storage[hash_index]:
-        found = False
-        previous = None
-        current = hash_table.storage[hash_index]
-
-        while current.next:
-            #while current.next if current.key == key then set found to the current key/value pair and break.
-            if current.key == key:
-                found = current
-                break
-            #else set previous to current and current to current.next to move to next node.
-            else:
-                previous = current
-                current = current.next
-        #if current.key == key then set found to the current key/value pair
-        if current.key == key:
-            found = current
-
-        if found:
-            if previous and previous is not current:
-                previous.next = found.next
-            elif previous:
-                previous.next = None
-            else:
-                hash_table.storage[hashed_index] = None
-            hash_table.count -= 1
-            return None
-        else:
-            print(f"Can't find {hashed_index}. Can't delete")
-            return None
+    pass
 
 
 # '''
@@ -129,7 +95,11 @@ def hash_table_retrieve(hash_table, key):
 # Fill this in
 # '''
 def hash_table_resize(hash_table):
-    pass
+    old_storage = hash_table.storage
+    hash_table.capacity *= 2
+    new_storage = [None] * (hash_table.capacity // 2)
+    hash_table.storage = old_storage + new_storage
+    return hash_table
 
 
 def Testing():
