@@ -64,7 +64,34 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    pass
+    hash_index = hash(key, hash_table.capacity)
+    if hash_table.storage[hash_index]:
+        found = False
+        previous = None
+        current = hash_table.storage[hash_index]
+        while current.next:
+            if current.key == key:
+                found = current
+                break
+            else:
+                previous = current
+                current = current.next
+
+        if current.key == key:
+            found = current
+
+        if found:
+            if previous and previous is not current:
+                previous.next = found.next
+            elif previous:
+                previous.next = None
+            else:
+                hash_table.storage[hash_index] = None
+            hash_table.count -= 1
+            return None
+        else:
+            print(f"Can't delete whats at index {hashed_index}.")
+            return None
 
 
 # '''
