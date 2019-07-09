@@ -44,6 +44,7 @@ def hash_table_insert(hash_table, key, value):
     
     if hash_table.storage[hash_index] is not None:
         print(f"You're about to Overwrite the value at index {hash_index} of hash table.")
+        
     
     hash_table.storage[hash_index] = key_value_pair
 
@@ -111,7 +112,6 @@ def Testing():
     ht = BasicHashTable(16)
 
     hash_table_insert(ht, "line", "Here today...\n")
-
     
     hash_table_remove(ht, "line")
 
