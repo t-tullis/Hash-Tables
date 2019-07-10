@@ -42,9 +42,9 @@ def hash_table_insert(hash_table, key, value):
     hash_index = hash(key, hash_table.capacity)
 
     if hash_table.storage[hash_index]:
-        #sets current to current hash index
+
         current = hash_table.storage[hash_index]
-        #while current.next
+       
         while current.next:
             if current.key == key:
                 current.value = value
@@ -65,10 +65,13 @@ def hash_table_insert(hash_table, key, value):
 # '''
 def hash_table_remove(hash_table, key):
     hash_index = hash(key, hash_table.capacity)
+    
     if hash_table.storage[hash_index]:
+        
         found = False
         previous = None
         current = hash_table.storage[hash_index]
+        
         while current.next:
             if current.key == key:
                 found = current
@@ -90,7 +93,7 @@ def hash_table_remove(hash_table, key):
             hash_table.count -= 1
             return None
         else:
-            print(f"Can't delete whats at index {hashed_index}.")
+            print(f"Can't delete value that is at index: {hashed_index}.")
             return None
 
 
@@ -114,6 +117,7 @@ def hash_table_retrieve(hash_table, key):
             return current.value
         else:
             return None
+    
     else:
         return None
 
