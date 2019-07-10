@@ -19,6 +19,7 @@ class HashTable:
     def __init__(self, capacity):
         self.capacity = capacity
         self.storage = [None] * capacity
+        self.count = 0
 
 
 
@@ -39,23 +40,28 @@ def hash(string, max):
 # Hint: Used the LL to handle collisions
 # '''
 def hash_table_insert(hash_table, key, value):
+    
     hash_index = hash(key, hash_table.capacity)
-
+   
     if hash_table.storage[hash_index]:
-
         current = hash_table.storage[hash_index]
-       
         while current.next:
             if current.key == key:
                 current.value = value
-                return 
+                return
             else:
-                current.next
-                
+                current = current.next
+
+        if current.key == key:
+            current.value = value
+            return
+
         current.next = LinkedPair(key, value)
-        
+        hash_table.count = hash_table.count + 1
     else:
         hash_table.storage[hash_index] = LinkedPair(key, value)
+        hash_table.count = hash_table.count + 1
+
 
 
 # '''
@@ -93,7 +99,7 @@ def hash_table_remove(hash_table, key):
             hash_table.count -= 1
             return None
         else:
-            print(f"Can't delete value that is at index: {hashed_index}.")
+            print(f"Can't delete value that is at index: {hash_index}.")
             return None
 
 
