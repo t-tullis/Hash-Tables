@@ -17,14 +17,21 @@ class LinkedPair:
 # '''
 class HashTable:
     def __init__(self, capacity):
-        pass
+        self.capacity = capacity
+        self.storage = [None] * capacity
+        self.count = 0
+
 
 
 # '''
 # Research and implement the djb2 hash function
 # '''
 def hash(string, max):
-    pass
+    hashed_num = 5381
+    
+    for character in string:
+        hashed_num = (( hashed_num << 5) + hashed_num) + ord(character)
+    return hashed_num % max 
 
 
 # '''
@@ -33,7 +40,28 @@ def hash(string, max):
 # Hint: Used the LL to handle collisions
 # '''
 def hash_table_insert(hash_table, key, value):
-    pass
+    
+    hash_index = hash(key, hash_table.capacity)
+   
+    if hash_table.storage[hash_index]:
+        current = hash_table.storage[hash_index]
+        while current.next:
+            if current.key == key:
+                current.value = value
+                return
+            else:
+                current = current.next
+
+        if current.key == key:
+            current.value = value
+            return
+
+        current.next = LinkedPair(key, value)
+        hash_table.count = hash_table.count + 1
+    else:
+        hash_table.storage[hash_index] = LinkedPair(key, value)
+        hash_table.count = hash_table.count + 1
+
 
 
 # '''
@@ -42,7 +70,37 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    pass
+    hash_index = hash(key, hash_table.capacity)
+    
+    if hash_table.storage[hash_index]:
+        
+        found = False
+        previous = None
+        current = hash_table.storage[hash_index]
+        
+        while current.next:
+            if current.key == key:
+                found = current
+                break
+            else:
+                previous = current
+                current = current.next
+
+        if current.key == key:
+            found = current
+
+        if found:
+            if previous and previous is not current:
+                previous.next = found.next
+            elif previous:
+                previous.next = None
+            else:
+                hash_table.storage[hash_index] = None
+            hash_table.count -= 1
+            return None
+        else:
+            print(f"Can't delete value that is at index: {hash_index}.")
+            return None
 
 
 # '''
@@ -51,14 +109,34 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    pass
+    
+    hash_index = hash(key, hash_table.capacity)
+    
+    if hash_table.storage[hash_index]:
+        current = hash_table.storage[hash_index]
+        while current.next:
+            if current.key == key:
+                return current.value
+            else:
+                current = current.next
+        if current.key == key:
+            return current.value
+        else:
+            return None
+    
+    else:
+        return None
 
 
 # '''
 # Fill this in
 # '''
 def hash_table_resize(hash_table):
-    pass
+    old_storage = hash_table.storage
+    hash_table.capacity *= 2
+    new_storage = [None] * (hash_table.capacity // 2)
+    hash_table.storage = old_storage + new_storage
+    return hash_table
 
 
 def Testing():
